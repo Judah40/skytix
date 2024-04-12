@@ -38,7 +38,7 @@ function Page() {
       day: "14",
       header: "Wonder4 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
+        "We’ll get you directly seated and inside for you to enjoy the show4.",
       image: "../../images/event3.jpg",
     },
     {
@@ -250,7 +250,7 @@ function Page() {
                 {events.filter((value) => {
                   return search.toLocaleLowerCase() === '' ? value
                     :
-                    value.header.toLocaleLowerCase().includes(search);
+                    value.header.toLocaleLowerCase().includes(search) || value.description.toLocaleLowerCase().includes(search);
                 }).map((value, index) => (
                   <Link
                     style={{ borderRadius: 18.95, border: 2, borderWidth: 2 }}
