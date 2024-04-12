@@ -12,7 +12,7 @@ function Page() {
     {
       month: "AUG",
       day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
+      header: "Wonder1 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
         "We’ll get you directly seated and inside for you to enjoy the show.",
       image: "../../images/event.jpg",
@@ -20,7 +20,7 @@ function Page() {
     {
       month: "AUG",
       day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
+      header: "Wonder2 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
         "We’ll get you directly seated and inside for you to enjoy the show.",
       image: "../../images/event1.jpg",
@@ -28,7 +28,7 @@ function Page() {
     {
       month: "AUG",
       day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
+      header: "Wonder3 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
         "We’ll get you directly seated and inside for you to enjoy the show.",
       image: "../../images/event2.jpg",
@@ -36,7 +36,7 @@ function Page() {
     {
       month: "AUG",
       day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
+      header: "Wonder4 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
         "We’ll get you directly seated and inside for you to enjoy the show.",
       image: "../../images/event3.jpg",
@@ -44,7 +44,7 @@ function Page() {
     {
       month: "AUG",
       day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
+      header: "Wonder5 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
         "We’ll get you directly seated and inside for you to enjoy the show.",
       image: "../../images/event4.jpg",
@@ -52,14 +52,20 @@ function Page() {
     {
       month: "AUG",
       day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
+      header: "Wonder6 Girls 2010 Wonder Girls World Tour San Francisco",
       description:
         "We’ll get you directly seated and inside for you to enjoy the show.",
       image: "../../images/event.jpg",
     },
   ];
+
+  // state to track the input change
+  const [search, setSearch] = useState('');
+
+
   // State to keep track of the selected value
   const [selectedDateValue, setSelectedDateValue] = useState("");
+  console.log(search);
 
   // Handler for when the dropdown value changes
   const handleSelectedDateChange = (event: any) => {
@@ -83,7 +89,7 @@ function Page() {
         className="w-full bg-orange-500 lg:p-12 lg:pt-24 pt-24 pb-12 space-y-4 h-[400px] bg-opacity-30 flex flex-col items-center justify-center">
           <p className="text-xl">Use the form below to filter your Search</p>
           <div className="w-11/12 flex justify-center">
-            <input
+              <input onChange={(e) => {setSearch(e.target.value)}}
               type="text"
               className="flex-1 p-2 border-[0.2px] text-sm text-gray-500 rounded-l-lg"
               placeholder="enter keyword"
@@ -241,7 +247,11 @@ function Page() {
             <div className="w-full bg-gray-100 rounded-lg flex flex-col items-center p-4">
 
               <div className="w-11/12 lg:w-10/12   grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {events.map((value, index) => (
+                {events.filter((value) => {
+                  return search.toLocaleLowerCase() === '' ? value
+                    :
+                    value.header.toLocaleLowerCase().includes(search);
+                }).map((value, index) => (
                   <Link
                     style={{ borderRadius: 18.95, border: 2, borderWidth: 2 }}
                     href={"/Pages/Eventdetails"}
