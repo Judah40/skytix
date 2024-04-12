@@ -1,8 +1,13 @@
+"use client";
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from "next/image";
 
+
+
 export default function AdminBlogPost() {
+
+
     const events = [
         {
             month: "AUG",
@@ -53,13 +58,29 @@ export default function AdminBlogPost() {
             image: "../../images/event.jpg",
         },
     ];
+    const [highlightStates, setHighlightStates] = useState(Array(events.length).fill(false));
+    const [highlightedIndex, setHighlightedIndex] = useState(null);
 
+    let highlight = (index: number) => {
+        const newHighlightStates = [...highlightStates]; // Create a copy of the highlightStates array
+        newHighlightStates[index] = !newHighlightStates[index]; // Toggle the highlight state for the clicked item
+        setHighlightStates(newHighlightStates); // Update the highlightStates state
+
+        // Unhighlight the previously highlighted item if there is one
+        if (highlightedIndex !== null && highlightedIndex !== index) {
+            newHighlightStates[highlightedIndex] = false;
+            setHighlightStates(newHighlightStates);
+        }
+
+        // Update the highlightedIndex state to the clicked item
+        setHighlightedIndex(index);
+    }
     return (
         <div className='grid md:grid-cols-3 gap-y-3 justify-center items-center gap-3'>
             {/* hero blog */}
-            <div
-                className='col col-span-2 row w-full h-full rounded flex flex-col justify-between'>
-
+            <div onClick={() => highlight(0)} key={0}
+                className={`${highlightStates[0] ? 'border-b-4 border-l-4 border-r-4 border-blue-500 rounded-[18.95px]' : ''} md:col-span-2 row w-full h-full rounded flex flex-col justify-between`}>
+                
                 {/* img */}
                 <div className="w-full">
                     <Image
@@ -92,9 +113,9 @@ export default function AdminBlogPost() {
                 </div>
 
             </div>
-            <div className='grid md:grid-rows-2 gap-y-3'>
-                <div
-                    className='w-full rounded h-full'>
+            <div className='grid grid-cols-1 md:grid-rows-2 gap-y-3'>
+                <div onClick={() => highlight(1)} key={1}
+                    className={`${highlightStates[1] ? 'border-b-4 border-l-4 border-r-4 border-blue-500 rounded-[18.95px]' : ''} w-full rounded h-full`}>
 
                     {/* img */}
                     <div className="w-full">
@@ -125,8 +146,8 @@ export default function AdminBlogPost() {
                         </div>
                     </div>
                 </div>
-                <div
-                    className='w-full rounded h-full'>
+                <div onClick={() => highlight(2)} key={2}
+                    className={`${highlightStates[2] ? 'border-b-4 border-l-4 border-r-4 border-blue-500 rounded-[18.95px]' : ''} w-full rounded h-full`}>
 
                     {/* img */}
                     <div className="w-full">
@@ -162,43 +183,42 @@ export default function AdminBlogPost() {
 
             {/* blog data */}
             {events.map((value, index) => (
-                <div
-                    className=' w-full rounded'
+                <div onClick={() => highlight(index)}
+                    className={`${highlightStates[index] ? 'border-b-4 border-l-4 border-r-4 border-blue-500 rounded-[18.95px]' : ''} w-full rounded`}
                     key={index}
                 >
-                    {index >= 3 ? (
-                    <div>
-                        {/* img */}
-                        <div className="w-full">
-                            <Image
-                                width={100}
-                                height={100}
-                                style={{
-                                    width: "100%",
-                                    borderTopLeftRadius: 18.95,
-                                    borderTopRightRadius: 18.95,
-                                }}
-                                src={value.image}
-                                alt="pic"
-                            />
-                        </div>
-                        {/* decription */}
-                        <div className="w-full p-4 flex space-x-2 border rounded-b-[18.95px]">
-                            {/* date */}
-                            <div className="text-center">
-                                <p className="font-bold text-blue-500">{value.month}</p>
-                                <h1>{value.day}</h1>
+                    {/* {index > 2 ? ( */}
+                        <div>
+                            {/* img */}
+                            <div className="w-full">
+                                <Image
+                                    width={100}
+                                    height={100}
+                                    style={{
+                                        width: "100%",
+                                        borderTopLeftRadius: 18.95,
+                                        borderTopRightRadius: 18.95,
+                                    }}
+                                    src={value.image}
+                                    alt="pic"
+                                />
                             </div>
-
                             {/* decription */}
-                            <div className="space-y-2">
-                                <p className="text-xs font-bold">{value.header}</p>
-                                <p className="text-xs font-thin">{value.description}</p>
+                            <div className="w-full p-4 flex space-x-2 border rounded-b-[18.95px]">
+                                {/* date */}
+                                <div className="text-center">
+                                    <p className="font-bold text-blue-500">{value.month}</p>
+                                    <h1>{value.day}</h1>
+                                </div>
+
+                                {/* decription */}
+                                <div className="space-y-2">
+                                    <p className="text-xs font-bold">{value.header}</p>
+                                    <p className="text-xs font-thin">{value.description}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    ): null}
-
+                    {/* ) : null} */}
 
                 </div>
             ))}
