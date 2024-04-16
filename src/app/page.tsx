@@ -5,9 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoCalendar } from "react-icons/io5";
-
 import Animation from "../../public/Lottie/AnimationHome.json";
-
 import dynamic from "next/dynamic";
 
 import {
@@ -28,7 +26,7 @@ import { userAuth } from "../../useContext";
 const EventItem = dynamic(() => import("@/components/HomeComponent/EventItem"));
 
 import { useRouter } from "next/navigation";
-import { getAllEvent } from "@/api/Auth";
+import { getAllBlog, getAllEvent } from "@/api/Auth";
 
 type EventList = {
   id: number;
@@ -38,119 +36,17 @@ type EventList = {
   description: string;
 };
 
+interface blog{
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  video: string;
+}
+
 export default function Home() {
-  const blog = [
-    {
-      id: 3,
-      title: "Food Truck Festival",
-      date: "2024-09-25",
-      location: "Downtown, San Francisco",
-      description:
-        "Savor the flavors of various cuisines from gourmet food trucks.",
-      pictures: [
-        {
-          url: "images/event1.jpg",
-          caption: "Food trucks lined up along the street",
-        },
-        {
-          url: "https://example.com/food-truck-festival-pic2.jpg",
-          caption: "A delicious assortment of dishes",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Food Truck Festival",
-      date: "2024-09-25",
-      location: "Downtown, San Francisco",
-      description:
-        "Savor the flavors of various cuisines from gourmet food trucks.",
-      pictures: [
-        {
-          url: "images/Event2.jpeg",
-          caption: "Food trucks lined up along the street",
-        },
-        {
-          url: "https://example.com/food-truck-festival-pic2.jpg",
-          caption: "A delicious assortment of dishes",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Food Truck Festival",
-      date: "2024-09-25",
-      location: "Downtown, San Francisco",
-      description:
-        "Savor the flavors of various cuisines from gourmet food trucks.",
-      pictures: [
-        {
-          url: "images/event2.jpg",
-          caption: "Food trucks lined up along the street",
-        },
-        {
-          url: "https://example.com/food-truck-festival-pic2.jpg",
-          caption: "A delicious assortment of dishes",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Food Truck Festival",
-      date: "2024-09-25",
-      location: "Downtown, San Francisco",
-      description:
-        "Savor the flavors of various cuisines from gourmet food trucks.",
-      pictures: [
-        {
-          url: "images/Event3.jpeg",
-          caption: "Food trucks lined up along the street",
-        },
-        {
-          url: "https://example.com/food-truck-festival-pic2.jpg",
-          caption: "A delicious assortment of dishes",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Food Truck Festival",
-      date: "2024-09-25",
-      location: "Downtown, San Francisco",
-      description:
-        "Savor the flavors of various cuisines from gourmet food trucks.",
-      pictures: [
-        {
-          url: "images/event3.jpg",
-          caption: "Food trucks lined up along the street",
-        },
-        {
-          url: "https://example.com/food-truck-festival-pic2.jpg",
-          caption: "A delicious assortment of dishes",
-        },
-      ],
-    },
-
-    {
-      id: 3,
-      title: "Food Truck Festival",
-      date: "2024-09-25",
-      location: "Downtown, San Francisco",
-      description:
-        "Savor the flavors of various cuisines from gourmet food trucks.",
-      pictures: [
-        {
-          url: "images/Event1.jpeg",
-          caption: "Food trucks lined up along the street",
-        },
-        {
-          url: "https://example.com/food-truck-festival-pic2.jpg",
-          caption: "A delicious assortment of dishes",
-        },
-      ],
-    },
-  ];
-
+ const [blog, setBlog]=useState<blog[]>([])
+ 
   const { username, logout, isAuthenticated } = userAuth();
   const navigation = useRouter();
   const [eventsList, setEventsList] = useState<EventList[]>([]);
@@ -181,10 +77,16 @@ export default function Home() {
       });
     } catch (error) {}
   };
+  const getAllBlogs=()=>{
+    getAllBlog().then((blogs)=>{
+      setBlog(blogs)
+    }).catch((error)=>{})
+  }
 
   useEffect(() => {
     console.log(isAuthenticated);
     getAllEvents();
+getAllBlogs();
   }, [isAuthenticated]);
   return (
     <Homwrapper>
@@ -395,9 +297,9 @@ export default function Home() {
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-12">
           {blog &&
             blog.map((values, index) => (
-              <Link href={""} key={index}>
+              <Link href={""} key={index} className="border rounded p-2 hover:border-blue-500 hover:bg-blue-200">
                 <Image
-                  src={values.pictures[0].url}
+                  src={values.image}
                   alt="blog image"
                   width={100}
                   height={100}
@@ -405,14 +307,14 @@ export default function Home() {
                 />
 
                 <div className="w-full font-bold">{values.title}</div>
-                <div className="w-full space-x-2 text-gray-500 flex items-center">
+                {/* <div className="w-full space-x-2 text-gray-500 flex items-center">
                   <FaLocationDot />
                   <h1>{values.location}</h1>
                 </div>
                 <div className="w-full space-x-2 text-gray-500 flex items-center">
                   <IoCalendar />
                   <h1>{values.date}</h1>
-                </div>
+                </div> */}
                 <div className="w-full  text-gray-500 flex items-center">
                   <h1>{values.description}</h1>
                 </div>

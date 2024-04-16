@@ -38,12 +38,14 @@ function Signin() {
             {/* Welcome */}
             <div className=" items-center ">
               <h1 className="text-xl font-bold md:text-2xl ">Welcome to</h1>
+              
              <Image
              src="../../images/starrtix.png"
              className="h-20"
              width={150}
              alt="logo"
              height={100}
+             
              />
             </div>
             {/* form fields */}

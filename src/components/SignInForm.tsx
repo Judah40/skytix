@@ -8,6 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/navigation";
 import { userAuth } from "../../useContext";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
 import { Hourglass } from "react-loader-spinner";
 
@@ -22,7 +23,8 @@ type auth = {
 
 const SignInForm = () => {
   const { loginAuthUser, isLoading, success } = userAuth();
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, resetPassword] = useState<string>("hi");
   const Router = useRouter();
   //state
   // Define your validation schema using Yup
@@ -73,15 +75,11 @@ const SignInForm = () => {
     >
       {({ errors, touched }) => (
         <Form className="space-y-6">
-            {
-                success&&
-
-              <div className="w-full text-green-600 flex items-center justify-center h-12 bg-green-300 rounded-lg">
-                {success.message}
-              </div>
-              
-          
-              }
+          {success && (
+            <div className="w-full text-green-600 flex items-center justify-center h-12 bg-green-300 rounded-lg">
+              {success.message}
+            </div>
+          )}
           <div>
             <label
               htmlFor="email"
@@ -110,13 +108,15 @@ const SignInForm = () => {
             >
               Password
             </label>
-            <Field
-              name="password"
-              type="password"
-              className={`mt-1 h-12 p-2 border block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 ${
-                errors.password && touched.password ? "border-red-500" : ""
-              }`}
-            />
+            <div className="flex">
+              <Field
+                name={!showPassword ? "password" : "text"}
+                type="password"
+                className={`mt-1 h-12 p-2 border block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 ${
+                  errors.password && touched.password ? "border-red-500" : ""
+                }`}
+              />
+            </div>
             <ErrorMessage
               name="password"
               component="div"

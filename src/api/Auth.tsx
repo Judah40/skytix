@@ -365,3 +365,49 @@ export const getInvitationByUuid=async(id:string)=>{
   const response = apiClient.get(`/event/invitation/${id}`)
   return response
 }
+
+
+
+
+interface FormValues {
+  title: string;
+  description: string;
+  category: string;
+  image: File |null;
+  video: File |null;
+  token: string;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// get upload blog
+
+export function uploadEventData(FormValues: FormValues) {
+
+  const data = new FormData();
+  if(FormValues.image) data.append('image', FormValues.image);
+  if(FormValues.video) data.append('video', FormValues.video);
+  data.append('category', FormValues.category);
+  data.append('description', FormValues.description);
+  data.append('title', FormValues.title);
+
+  const config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: `${url}/blog/blog/`,
+    headers: { 
+      'Authorization': `Bearer ${FormValues.token}`,
+    },
+    data: data
+  };
+
+  const response= axios.request(config)
+   return response
+}
+
+////////////////////////////////////////////////////////////////////////
+// get all blog 
+export const getAllBlog=async() =>{
+  const response =await api.get("/blog/blog")
+  return response.data;
+}
