@@ -203,7 +203,7 @@ export default function Home() {
             {/* header */}
             <h1 className="text-xl md:text-2xl font-serif text-center md:text-start ">
               We offer event organizers and attendees a reliable user-friendly
-              platform for seemless ticketing real time event updates, and
+              platform for seamless ticketing, real time event updates, and
               marketing, tailored to multiple payment methods all in one place
             </h1>
             {/* body */}
@@ -278,7 +278,7 @@ export default function Home() {
         {/* container */}
         <div className="w-11/12 lg:w-10/12  grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {eventsList &&
-            eventsList.slice(0,6).map((value, index) => (
+            eventsList.slice(0, 6).map((value, index) => (
               <Link
                 style={{ borderRadius: 18.95, border: 2, borderWidth: 2 }}
                 href={{
@@ -421,13 +421,13 @@ export default function Home() {
         </div>
         {/* See More */}
         <div className="w-full justify-center flex p-4">
-        <Link
-          href={"/Pages/Search"}
-          className="w-40 h-14 items-center justify-center flex rounded-xl border-blue-500 border text-blue-500"
-        >
-          See More
-        </Link>
-      </div>
+          <Link
+            href={"/Pages/Search"}
+            className="w-40 h-14 items-center justify-center flex rounded-xl border-blue-500 border text-blue-500"
+          >
+            See More
+          </Link>
+        </div>
       </div>
 
       <div className="w-full  flex justify-center text-center p-4">
