@@ -301,7 +301,7 @@ function Page() {
                   </div>
                   <div className=" flex justify-center w-full">
                     <div className="w-10/12">
-                      <h1 className="text-start text-gray-600">{value.time}</h1>
+                      {/* <h1 className="text-start text-gray-600">{value.time}</h1> */}
                     </div>
                   </div>
                   <div className=" flex justify-center w-full">
