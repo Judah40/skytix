@@ -119,13 +119,22 @@ getAllBlogs();
               >
                 <h1 className="">Create Event</h1>
               </Link>
+              {
+                username?
 
               <Link
                 href={"/User/Dashboard"}
                 className="items-center justify-center flex bg-[#fb8500] w-40 h-12 border rounded "
               >
                 <h1 className="">Dashboard</h1>
-              </Link>
+              </Link>:
+              <Link
+              href={"/Pages/Search"}
+              className="items-center justify-center flex bg-[#fb8500] w-40 h-12 border rounded "
+            >
+              <h1 className="">Find Event</h1>
+            </Link>
+              }
             </div>
           </div>
           <div className=" p-4 bg-blue-200 rounded-full bg-opacity-50 flex items-center justify-center">
@@ -324,7 +333,7 @@ getAllBlogs();
         {/* See More */}
         <div className="w-full justify-center flex p-4">
           <Link
-            href={"/Pages/Search"}
+            href={"/User/Blogs"}
             className="w-40 h-14 items-center justify-center flex rounded-xl border-blue-500 border text-blue-500"
           >
             See More

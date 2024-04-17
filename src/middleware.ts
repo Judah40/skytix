@@ -24,11 +24,11 @@ const url = request.nextUrl.clone()
 
 
     if(url.pathname==="/Auth/Signin/" || url.pathname==="/Auth/Signup/"){
-      if(token){
+      if(token && data){
         return NextResponse.redirect(new URL('/',request.url))
       }
     }else if(url.pathname==="/User/Dashboard"|| url.pathname==="/User/Marketing" ||url.pathname==="/User/Profile"|| url.pathname==="/User/Ticket"){
-      if(!token){
+      if(!token && !data){
         return NextResponse.redirect(new URL('/',request.url))
       }
     }
