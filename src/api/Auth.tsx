@@ -49,12 +49,10 @@ apiClient.interceptors.request.use(
 
 //authtoken
 
-export const fetchuser=async()=>{
-
-    const response = apiClient.get('/auth/user/')
-    return response 
-
-}
+export const fetchuser = async () => {
+  const response = apiClient.get("/auth/user/");
+  return response;
+};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //login
@@ -98,7 +96,7 @@ export const authToken = async (token: String) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //get  event by if=d
-export const getAllEvents = async (id:string) => {
+export const getAllEvents = async (id: string) => {
   try {
     const response = api.get(`/public/events/${id}`);
     return response;
@@ -264,75 +262,63 @@ export const getAllTickets = async () => {
   } catch (error) {}
 };
 
-
-
 ////////////////////////////////////////////////////////////////////////
 //Book ticket
 
-
-type BookTicket ={
-  event:number;
-  name:string;
-  email:string;
-  phonenumber:string;
-  number_of_tickets:number;
-}
-export const BookdTicket=async (values:BookTicket) => {
-  const data={
-    event:values.event,
-    name:values.name,
-    email:values.email,
-    phonenumber:values.phonenumber,
-    number_of_tickets:values.number_of_tickets
-  }
+type BookTicket = {
+  event: number;
+  name: string;
+  email: string;
+  phonenumber: string;
+  number_of_tickets: number;
+};
+export const BookdTicket = async (values: BookTicket) => {
+  const data = {
+    event: values.event,
+    name: values.name,
+    email: values.email,
+    phonenumber: values.phonenumber,
+    number_of_tickets: values.number_of_tickets,
+  };
   try {
-    const response = await api.post("/event/booking/",data)
-    return response
-  } catch (error) {
-    
-  }
-}
-
+    const response = await api.post("/event/booking/", data);
+    return response;
+  } catch (error) {}
+};
 
 ////////////////////////////////////////////////////////////////////////
 // get Booked ticket
 
 export type tickets = {
-  booked_on:string;
-  email:string;
-  event:number;
-  id:number;
-  name:string;
-  number_of_tickets:number;
-  phonenumber:string;
-  qrcode:string;
-  unique_id:string;
-}
+  booked_on: string;
+  email: string;
+  event: number;
+  id: number;
+  name: string;
+  number_of_tickets: number;
+  phonenumber: string;
+  qrcode: string;
+  unique_id: string;
+};
 
-
-export interface ApiResponse{
-  items:tickets[];
+export interface ApiResponse {
+  items: tickets[];
 }
-export const getTicket=async(id:string)=>{
+export const getTicket = async (id: string) => {
   try {
-    const response = await apiClient.get(`/event/booking/by-unique-id/${id}`)
-    return response.data
-  } catch (error) {
-    
-  }
-}
-
+    const response = await apiClient.get(`/event/booking/by-unique-id/${id}`);
+    return response.data;
+  } catch (error) {}
+};
 
 ////////////////////////////////////////////////////////////////////////
-// get INVITATION by event id 
-export const getInvitation=async(id:string)=>{
+// get INVITATION by event id
+export const getInvitation = async (id: string) => {
   try {
-    const response = await apiClient.get(`/event/events/${id}/invitations/`)
-    return response.data
-  } catch (error) {
-    
-  }
-}
+    const response = await apiClient.get(`/event/events/${id}/invitations/`);
+    return response.data;
+  } catch (error) {}
+};
 
 ////////////////////////////////////////////////////////////////////////
 // create invitation
@@ -344,70 +330,72 @@ type invitation = {
   email: string;
   event: number;
 };
-export const createInvitation=async(invitation:invitation)=>{
-  const data={
-    nameofattendee:invitation.nameofattendee,
-    expirationdate:invitation.expirationdate,
-    numberofinvitaion:invitation.numberofinvitaion,
-    uniqueIdentidier:invitation.uniqueIdentidier,
-    email:invitation.email,
-    event:invitation.event
-  }
+export const createInvitation = async (invitation: invitation) => {
+  const data = {
+    nameofattendee: invitation.nameofattendee,
+    expirationdate: invitation.expirationdate,
+    numberofinvitaion: invitation.numberofinvitaion,
+    uniqueIdentidier: invitation.uniqueIdentidier,
+    email: invitation.email,
+    event: invitation.event,
+  };
 
-  const response= apiClient.post("/event/invitations/", data)
-  return response
-}
-
+  const response = apiClient.post("/event/invitations/", data);
+  return response;
+};
 
 ////////////////////////////////////////////////////////////////////////
 // get INVITATION by uuid
-export const getInvitationByUuid=async(id:string)=>{
-  const response = apiClient.get(`/event/invitation/${id}`)
-  return response
-}
-
-
-
+export const getInvitationByUuid = async (id: string) => {
+  const response = apiClient.get(`/event/invitations/by-unique-id/${id}/`);
+  return response;
+};
 
 interface FormValues {
   title: string;
   description: string;
   category: string;
-  image: File |null;
-  video: File |null;
+  image: File | null;
+  video: File | null;
   token: string;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 // get upload blog
 
 export function uploadEventData(FormValues: FormValues) {
-
   const data = new FormData();
-  if(FormValues.image) data.append('image', FormValues.image);
-  if(FormValues.video) data.append('video', FormValues.video);
-  data.append('category', FormValues.category);
-  data.append('description', FormValues.description);
-  data.append('title', FormValues.title);
+  if (FormValues.image) data.append("image", FormValues.image);
+  if (FormValues.video) data.append("video", FormValues.video);
+  data.append("category", FormValues.category);
+  data.append("description", FormValues.description);
+  data.append("title", FormValues.title);
 
   const config = {
-    method: 'post',
+    method: "post",
     maxBodyLength: Infinity,
     url: `${url}/blog/blog/`,
-    headers: { 
-      'Authorization': `Bearer ${FormValues.token}`,
+    headers: {
+      Authorization: `Bearer ${FormValues.token}`,
     },
-    data: data
+    data: data,
   };
 
-  const response= axios.request(config)
-   return response
+  const response = axios.request(config);
+  return response;
 }
 
 ////////////////////////////////////////////////////////////////////////
-// get all blog 
-export const getAllBlog=async() =>{
-  const response =await api.get("/blog/blog")
+// get all blog
+export const getAllBlog = async () => {
+  const response = await api.get("/blog/blog");
+  return response.data;
+};
+
+////////////////////////////////////////////////////////////////////////
+// get  blog BY id
+
+export const getBlogById = async (id:string) => {
+  const response = await api.get(`/blog/blog/${id}`)
   return response.data;
 }

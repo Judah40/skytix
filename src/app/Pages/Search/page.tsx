@@ -1,70 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState,ChangeEvent } from "react";
 import Homwrapper from "../../../components/Homwrapper";
 import { FaSearch } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import { getAllEvent } from "@/api/Auth";
+
+type EventList = {
+  id: number;
+  image: string;
+  video: string;
+  title: string;
+  description: string;
+};
+
 
 function Page() {
-  //events array
-  const events = [
-    {
-      month: "AUG",
-      day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
-      description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
-      image: "../../images/event.jpg",
-    },
-    {
-      month: "AUG",
-      day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
-      description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
-      image: "../../images/event1.jpg",
-    },
-    {
-      month: "AUG",
-      day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
-      description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
-      image: "../../images/event2.jpg",
-    },
-    {
-      month: "AUG",
-      day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
-      description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
-      image: "../../images/event3.jpg",
-    },
-    {
-      month: "AUG",
-      day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
-      description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
-      image: "../../images/event4.jpg",
-    },
-    {
-      month: "AUG",
-      day: "14",
-      header: "Wonder Girls 2010 Wonder Girls World Tour San Francisco",
-      description:
-        "We’ll get you directly seated and inside for you to enjoy the show.",
-      image: "../../images/event.jpg",
-    },
-  ];
+
   // State to keep track of the selected value
   const [selectedDateValue, setSelectedDateValue] = useState("");
-
+  const [Event, setEvent] = useState<EventList[]>([])
+  const [query, setQuery] = useState<string>("")
+  const [results, setResults] = useState<EventList[]>([])
+  const getAllEvents = async () => {
+    try {
+      await getAllEvent().then((events: any) => {
+        console.log(events);
+        setEvent(events?.data);
+        setResults(events?.data);
+      });
+    } catch (error) {}
+  };
   // Handler for when the dropdown value changes
   const handleSelectedDateChange = (event: any) => {
     setSelectedDateValue(event.target.value);
+
   };
+
+// Function to handle input change
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
+        // console.log(event.target.value);
+    };
+
+
+
+  useEffect(()=>{
+    getAllEvents()
+   
+  },[])
+
+  useEffect(()=>{
+    if(query){
+      const filteredEvents = Event.filter(event => event.title.toLowerCase().includes(query.toLowerCase()));
+      setResults(filteredEvents);
+      console.log(filteredEvents)
+    }else{
+      setResults(Event)
+    }
+  },[query])
   return (
     <Homwrapper>
       <div className="flex-1  flex flex-col  w-full items-center ">
@@ -85,6 +80,8 @@ function Page() {
           <div className="w-11/12 flex justify-center">
             <input
               type="text"
+              value={query}
+              onChange={handleInputChange}
               className="flex-1 p-2 border-[0.2px] text-sm text-gray-500 rounded-l-lg"
               placeholder="enter keyword"
             />
@@ -241,10 +238,15 @@ function Page() {
             <div className="w-full bg-gray-100 rounded-lg flex flex-col items-center p-4">
 
               <div className="w-11/12 lg:w-10/12   grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {events.map((value, index) => (
+                {results.map((value, index) => (
                   <Link
                     style={{ borderRadius: 18.95, border: 2, borderWidth: 2 }}
-                    href={"/Pages/Eventdetails"}
+                    href={{
+                      pathname: `/Pages/Eventdetails`,
+                      query: {
+                        id: value.id,
+                      },
+                    }}
                     key={index}
                     passHref
                   >
@@ -266,13 +268,13 @@ function Page() {
                     <div className="w-full p-4 flex space-x-2 border rounded-b-[18.95px]">
                       {/* date */}
                       <div className="text-center">
-                        <p className="font-bold text-blue-500">{value.month}</p>
-                        <h1>{value.day}</h1>
+                        {/* <p className="font-bold text-blue-500">{value.month}</p> */}
+                        {/* <h1>{value.day}</h1> */}
                       </div>
 
                       {/* decription */}
                       <div className="space-y-2">
-                        <p className="text-xs font-bold">{value.header}</p>
+                        <p className="text-xs font-bold">{value.title}</p>
                         <p className="text-xs font-thin">{value.description}</p>
                       </div>
                     </div>

@@ -17,10 +17,18 @@ import Step4 from "@/components/EventSteps/Step4";
 import { userAuth } from "../../../../useContext";
 import { FaCheckCircle } from "react-icons/fa";
 
-import { eventMedia, getProfilePic, postEvent } from "@/api/Auth";
+import { eventMedia, getAllBlog, getProfilePic, postEvent } from "@/api/Auth";
 import { withProtected } from "@/components/ProtectedRoute/Authenticated";
 type ValuePiece = Date | null;
 
+interface blog{
+  id:number;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  video: string;
+}
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 function Page() {
   //states
@@ -69,6 +77,15 @@ function Page() {
     setValue3(value)
   }
  
+  const [blog, setBlog]=useState<blog[]>([])
+
+
+  const getAllBlogs=()=>{
+    getAllBlog().then((blogs)=>{
+      setBlog(blogs)
+      console.log(blogs)
+    }).catch((error)=>{})
+  }
   const values4 =(value:any)=>{
     // console.log(value)
     // setValue4(value)
@@ -132,6 +149,12 @@ function Page() {
     <Step3 key={currentIndex} closeStep={nextScreen} Finalvalues={values3} />,
     <Step4 key={currentIndex} closeStep={nextScreen} Finalvalues={values4} />,
   ];
+
+
+
+  useEffect(()=>{
+    getAllBlogs()
+  },[])
   return (
 
       <Userdashboardwrapper>
@@ -254,7 +277,7 @@ function Page() {
             </div>
             {/* activities */}
             <div className="flex flex-col space-y-10 p-4">
-              {activities.map((value, index) => (
+              {blog.map((value, index) => (
                 <button key={index} className="border p-4 hover:bg-gray-100">
                   <div className="flex space-x-2 b">
                     <img
@@ -264,15 +287,15 @@ function Page() {
                     />
                     <div>
                       <h1 className="font-semibold text-start ">
-                        {value.event}
+                        {value.title}
                       </h1>
                     </div>
-                    <h1>{value.activity}</h1>
+                    <h1>{value.category}</h1>
                   </div>
                   <div className=" flex justify-center w-full">
                     <div className="w-10/12">
                       <h1 className="text-start text-blue-600">
-                        {value.about}
+                        {value.description}
                       </h1>
                     </div>
                   </div>
@@ -283,7 +306,7 @@ function Page() {
                   </div>
                   <div className=" flex justify-center w-full">
                     <div className="w-10/12">
-                      {value.img ? <img src={value.img} alt="images" /> : null}
+                      {value.image ? <img src={value.image} alt="images" /> : null}
                     </div>
                   </div>
                 </button>

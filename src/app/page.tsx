@@ -114,17 +114,17 @@ getAllBlogs();
               {/* button */}
 
               <Link
-                href={username ? "/User/Dashboard" : "/Auth/Signin"}
+                href={username ? "/User/CreateEvent" : "/Auth/Signin"}
                 className="items-center justify-center flex bg-blue-500 w-40 h-12 border rounded "
               >
                 <h1 className="">Create Event</h1>
               </Link>
 
               <Link
-                href={"/Pages/Search"}
+                href={"/User/Dashboard"}
                 className="items-center justify-center flex bg-[#fb8500] w-40 h-12 border rounded "
               >
-                <h1 className="">Buy Ticket</h1>
+                <h1 className="">Dashboard</h1>
               </Link>
             </div>
           </div>
@@ -294,9 +294,9 @@ getAllBlogs();
         <h1 className="text-xl">Blogs</h1>
 
         {/* values */}
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-12">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-12 ">
           {blog &&
-            blog.map((values, index) => (
+            blog.slice(0,6).map((values, index) => (
               <Link href={""} key={index} className="border rounded p-2 hover:border-blue-500 hover:bg-blue-200">
                 <Image
                   src={values.image}

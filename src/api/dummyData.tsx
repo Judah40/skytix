@@ -141,7 +141,7 @@ export const userNavigation = [
   },
   {
     name: "Blog",
-    value: "Blog",
+    value: "Blogs",
   },
 
   // {

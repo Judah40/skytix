@@ -237,7 +237,7 @@ function Page() {
             onRequestClose={() => setModalIsOpen(false)}
           />
 
-          {invitation.length > 0 ? (
+          {invitation&& invitation.length > 0 ? (
             <Table<invitation> columns={column} data={invitation} />
           ) : (
             <div>No Invitation created</div>
