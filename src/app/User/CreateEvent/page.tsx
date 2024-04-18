@@ -104,7 +104,7 @@ function page() {
         className=" text-white h-[400px] "
       >
       </div>
-      <div className="flex flex-row justify-center lg:h-[600px]  p-6">
+      <div className="flex flex-row justify-center lg:h-[750px]  p-6">
 
       <div className="hidden shadow border-2 lg:block w-6/12 h-full bg-red-500">
        <img src="/images/event1.jpg" alt="images" className="w-full h-full "/>

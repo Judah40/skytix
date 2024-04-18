@@ -70,12 +70,12 @@ export default function Home() {
   };
 
   const getAllEvents = async () => {
-    try {
       await getAllEvent().then((events: any) => {
         console.log(events);
         setEventsList(events?.data);
+      }).catch((err)=>{
+
       });
-    } catch (error) {}
   };
   const getAllBlogs=()=>{
     getAllBlog().then((blogs)=>{
