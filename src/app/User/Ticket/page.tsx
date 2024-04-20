@@ -325,7 +325,7 @@ function Page() {
                     <FaCheckCircle color="green" />
                   </div>
                 ) : (
-                  <div>No Ticket</div>
+                  <div>No Ticket Or Invalid Ticket</div>
                 )}
               </p>
               <p>{data && <div>Scanned: 2</div>}</p>
