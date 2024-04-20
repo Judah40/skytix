@@ -12,7 +12,7 @@ function Signin() {
       <div className="flex w-full justify-center">
         <div className=" h-[100vh]  hidden w-full lg:block lg:">
           <Image
-            src={"../../images/loginback.png"}
+            src={"../../images/Event2.jpeg"}
             alt=""
             className="w-full h-full"
             width={500}

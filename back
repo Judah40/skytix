@@ -17,7 +17,7 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import Table from "@/components/TicketComponents/Invitation";
 import InvitationFormModal from "@/components/TicketComponents/InvitationFormModal";
 import { FaCheckCircle } from "react-icons/fa";
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
 
 type Event = {
   id: number;
@@ -54,9 +54,9 @@ type invitation = {
   event: number;
 };
 
-type qrcode = {
-  image: File;
-};
+type qrcode ={
+  image:File;
+}
 const columns: Column<TicketData>[] = [
   { Header: "Ticket Number", accessor: "ticketNumber" },
   { Header: "Expiration Date", accessor: "expirationDate" },
@@ -89,7 +89,7 @@ function Page() {
   const [invitation, setInvitation] = useState<invitation[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [data, setData] = useState<any | null>();
-  const [qrcode, setQrcode] = useState<any | null>();
+  const [qrcode, setQrcode] = useState<any| null>()
   // const handleScan = (data: any) => {
   //   console.log(data);
   //   // if (data) {
@@ -112,19 +112,21 @@ function Page() {
     const response = await getInvitation(id);
     setInvitation(response);
     console.log(response);
+    
+    setQrcode
 
-    setQrcode;
   };
 
-  ////////////////////////////////////////////////////////////////////////
-  //convert table to excell
-  const handleExport = (data: any) => {
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Report");
 
-    // Write the workbook to a file
-    XLSX.writeFile(wb, "report.xlsx");
+  ////////////////////////////////////////////////////////////////////////
+    //convert table to excell
+    const handleExport = (data:any) => {
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Report");
+
+      // Write the workbook to a file
+      XLSX.writeFile(wb, 'report.xlsx');
   };
 
   useEffect(() => {
@@ -253,33 +255,36 @@ function Page() {
             </button>
 
             <button
-              className={`p-2 rounded-lg text-white ${
-                scan
-                  ? "bg-red-500 hover:bg-red-700"
-                  : "bg-green-500 hover:bg-green-700"
-              } `}
-              onClick={() => setScan(!scan)}
-            >
-              {scan ? <h1>Close Scanner</h1> : <h1>Scan Ticket</h1>}
-            </button>
+            className={`p-2 rounded-lg text-white ${
+              scan
+                ? "bg-red-500 hover:bg-red-700"
+                : "bg-green-500 hover:bg-green-700"
+            } `}
+            onClick={() => setScan(!scan)}
+          >
+            {scan ? <h1>Close Scanner</h1> : <h1>Scan Ticket</h1>}
+          </button>
 
-            <div className="w-40 h-40">
-              {scan ? (
-                <Scanner
-                  onResult={(text, result) => {
-                    console.log(text);
-                    getInvitationByUuid(text).then((ticket) => {
-                      if (ticket) {
-                        setData(ticket);
-                        // console.log(ticket)
-                      }
-                      // console.log(ticket?.items)
-                    });
-                  }}
-                  onError={(error) => console.log(error?.message)}
-                />
-              ) : null}
-            </div>
+          <div className="w-40 h-40">
+             {scan ? (
+              <Scanner
+              
+                onResult={(text, result) => {
+                  console.log(text);
+                  getInvitationByUuid(resultInvitation)
+                  .then((ticket) => {
+                    if (ticket) {
+                      setData(ticket);
+                      // console.log(ticket)
+                    }
+                    // console.log(ticket?.items)
+                  });
+                }}
+                onError={(error) => console.log(error?.message)}
+
+              />
+            ) : null}
+</div>
           </div>
           <InvitationFormModal
             isOpen={modalIsOpen}
@@ -340,16 +345,18 @@ function Page() {
 
           <div>
             <button
-              onClick={() => {
-                handleExport(invitation);
-              }}
-              className="p-2 bg-green-500"
+            onClick={()=>{
+              handleExport(invitation)
+            }}
+            className="p-2 bg-green-500"
             >
               Export dats
             </button>
           </div>
         </div>
       )}
+
+
     </Userdashboardwrapper>
   );
 }

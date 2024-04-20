@@ -14,7 +14,7 @@ function Signup() {
       <div className="flex w-full justify-center flex-row-reverse">
         <div className=" h-[100vh]  hidden w-full lg:block lg:">
           <Image
-            src={"../../images/signupback.png"}
+            src={"../../images/Event3.jpeg"}
             alt=""
             className="w-full h-full"
             width={500}
